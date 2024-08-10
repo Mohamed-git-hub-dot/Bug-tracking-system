@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bug Tracking System</title>
+</head>
+<body>
+    <h1>Bug Tracking System</h1>
+    <form action="/add" method="post">
+        <h2>Add New Bug</h2>
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Description" required></textarea>
+        <button type="submit">Add Bug</button>
+    </form>
+    <h2>Bug List</h2>
+    <ul>
+        {% for bug in bugs %}
+        <li>
+            <strong>{{ bug.title }}</strong> - {{ bug.status }}
+            <form action="/update/{{ bug.id }}" method="post" style="display:inline;">
+                <select name="status">
+                    <option value="Open" {% if bug.status == 'Open' %}selected{% endif %}>Open</option>
+                    <option value="In Progress" {% if bug.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Closed" {% if bug.status == 'Closed' %}selected{% endif %}>Closed</option>
+                </select>
+                <button type="submit">Update Status</button>
+            </form>
+            <form action="/delete/{{ bug.id }}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
